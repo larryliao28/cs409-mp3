@@ -121,32 +121,32 @@ def main(argv):
         data = response.read()
         d = json.loads(data)
 
-        taskID = str(d['data']['_id'])
+        # taskID = str(d['data']['_id'])
 
-        # Make sure the task is added to the pending list of the user
-        if assigned and not completed:
-            # GET the correct user
-            conn.request("GET","""/api/users?where={"_id":\""""+assignedUserID+"""\"}""")
-            response = conn.getresponse()
-            data = response.read()
-            d = json.loads(data)
+        # # Make sure the task is added to the pending list of the user
+        # if assigned and not completed:
+        #     # GET the correct user
+        #     conn.request("GET","""/api/users?where={"_id":\""""+assignedUserID+"""\"}""")
+        #     response = conn.getresponse()
+        #     data = response.read()
+        #     d = json.loads(data)
 
-            # Store all the user properties
-            assignedUserName = str(d['data'][0]['name'])
-            assignedUserEmail = str(d['data'][0]['email'])
-            assignedUserDate = str(d['data'][0]['dateCreated'])
+        #     # Store all the user properties
+        #     assignedUserName = str(d['data'][0]['name'])
+        #     assignedUserEmail = str(d['data'][0]['email'])
+        #     assignedUserDate = str(d['data'][0]['dateCreated'])
 
-            # Append the new taskID to pending tasks
-            assignedUserTasks = d['data'][0]['pendingTasks']
-            assignedUserTasks = [str(x).replace('[','').replace(']','').replace("'",'').replace('"','') for x in assignedUserTasks]
-            assignedUserTasks.append(taskID)
+        #     # Append the new taskID to pending tasks
+        #     assignedUserTasks = d['data'][0]['pendingTasks']
+        #     assignedUserTasks = [str(x).replace('[','').replace(']','').replace("'",'').replace('"','') for x in assignedUserTasks]
+        #     assignedUserTasks.append(taskID)
 
-            # PUT in the user
-            params = urllib.parse.urlencode({'_id': assignedUserID, 'name': assignedUserName, 'email': assignedUserEmail, 'dateCreated': assignedUserDate, 'pendingTasks': assignedUserTasks}, True)
-            conn.request("PUT", "/api/users/"+assignedUserID, params, headers)
-            response = conn.getresponse()
-            data = response.read()
-            d = json.loads(data)
+        #     # PUT in the user
+        #     params = urllib.parse.urlencode({'_id': assignedUserID, 'name': assignedUserName, 'email': assignedUserEmail, 'dateCreated': assignedUserDate, 'pendingTasks': assignedUserTasks}, True)
+        #     conn.request("PUT", "/api/users/"+assignedUserID, params, headers)
+        #     response = conn.getresponse()
+        #     data = response.read()
+        #     d = json.loads(data)
 
     # Exit gracefully
     conn.close()
