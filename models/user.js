@@ -1,9 +1,27 @@
 // Load required packages
 var mongoose = require('mongoose');
+const { required } = require('nodemon/lib/config');
 
 // Define our user schema
 var UserSchema = new mongoose.Schema({
-    name: String
+    name: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    pendingTasks: {
+        type: [String],
+        default: []
+    },
+    dateCreated: {
+        type: Date,
+        default: Date.now
+    }
+
 });
 
 // Export the Mongoose model
